@@ -3,6 +3,7 @@ Ekam's CLI
 """
 
 import click
+from os import system
 from ekam import run, global_env
 
 @click.group()
@@ -18,7 +19,10 @@ def ply(task, tree, quiet):
         run(f.read(), tree, quiet)
     if task in global_env and isinstance(global_env[task], tuple):
         # This is indexing hell
-        click.echo(global_env[task][1][0]["v"])
+        cmds = global_env[task][1]
+        for cmd in cmds:
+            click.echo(cmd[0]["v"])
+            system(cmd[0]["v"])
     else:
         click.secho(f"No task named {task}", fg="red")
 
