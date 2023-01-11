@@ -1,0 +1,18 @@
+# -> is `alias`
+-> $b $build
+-> $t $test
+
+# <- is `set`
+<- 'uname -a' $host
+
+# build
+: $build [] [ 'nuitka3 main.py --follow-imports -o ekam' ]
+
+# test our example
+: $test [] [ $build './ekam -t true' ]
+
+# run a specific test (only for demonstration purposes)
+: $test [$name] [ $build './test --test $name' ]
+
+# a little dad joke at the end here
+: $joke [] [ 'echo "Where did all the lights go to when they commit a crime? Prism! (It\'s a light sentence)"' ]
