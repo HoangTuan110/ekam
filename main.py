@@ -3,7 +3,7 @@ Ekam's CLI
 """
 
 import click
-from ekam import eval
+from ekam import run, global_env
 
 @click.group()
 def main():
@@ -11,8 +11,14 @@ def main():
 
 @click.command()
 @click.argument("task")
-def ply(task):
-    click.echo(eval(task))
+@click.option("--tree", default=False, help="Print the parsed data as a tree")
+def ply(task, tree):
+    with open("Ekamfile", "r") as f:
+        run(f.read(), tree)
+    if task in global_env and isinstance(global_env[task], tuple):
+        click.echo(global_env[task[1]["v"]])
+    else:
+        click.secho(f"No task named {task}", fg="red")
 
 main.add_command(ply)
 
