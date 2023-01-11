@@ -127,6 +127,18 @@ def eval(tokens):
         # Recipe
         elif tokens[i]["v"] == ":":
             name, args, cmds = tokens[i + 1], tokens[i + 2], tokens[i + 3]
+            try:
+                # Filter the variables in the commands of the recipe,
+                # then replace them with the thing in our global
+                # environment
+                idents = filter(lambda x: x["t"] == 3, cmds)
+                for ident in idents:
+                    if isinstance(global_env[ident["v"]], list):
+                        cmds[cmds.index(ident)] = global_env[ident["v"]][1]
+                    else:
+                        cmds[cmds.index(ident)] = global_env[ident["v"]]
+            except Exception:
+                print("No variables found in recipe.")
             global_env[name["v"]] = (args["v"], cmds["v"])
             i += 4
         else:
