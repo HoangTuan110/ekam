@@ -21,8 +21,8 @@ def ply(task, tree, quiet):
         # This is indexing hell
         cmds = global_env[task][1]
         for cmd in cmds:
-            click.echo(cmd[0]["v"])
-            system(cmd[0]["v"])
+            click.echo(cmd["v"])
+            system(cmd["v"])
     else:
         click.secho(f"No task named {task}", fg="red")
 
