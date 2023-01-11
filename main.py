@@ -16,7 +16,7 @@ def ply(task, tree):
     with open("Ekamfile", "r") as f:
         run(f.read(), tree)
     if task in global_env and isinstance(global_env[task], tuple):
-        click.echo(global_env[task[1]["v"]])
+        click.echo(global_env[task][1]["v"])
     else:
         click.secho(f"No task named {task}", fg="red")
 
