@@ -50,9 +50,9 @@ def consume_string(env: dict, code: str, pos: int):
         if code[pos] == "\\":
             tmp += rf"{code[pos + 1]}"
             pos += 2
-        elif code[pos] == "$":
-            ident, pos = identifier(code, pos)
-            tmp += env[ident]
+        #elif code[pos] == "$":
+        #    ident, pos = identifier(code, pos)
+        #    tmp += env[ident]
         else:
             tmp += code[pos]
             pos += 1
@@ -119,7 +119,7 @@ def eval(tokens):
         # Set
         if tokens[i]["v"] == "<-":
             value, name = tokens[i + 1], tokens[i + 2]
-            env[name["v"]] = value["v"]
+            global_env[name["v"]] = value["v"]
             i += 3
         else:
             i += 1
@@ -134,4 +134,4 @@ def run(code, tree=False):
         print(f"Parsed: {parsed}")
     eval(parsed)
     print("Environments: ", end="")
-    pprint(env)
+    pprint(global_env)
