@@ -3,13 +3,18 @@ Ekam's CLI
 """
 
 import click
-from ekam import run
+from ekam import eval
+
+@click.group()
+def main():
+    pass
 
 @click.command()
-@click.option("tree", "-t", type=click.BOOL, default=False, help="Print parsed tree of each line before evaling")
-def main(tree):
-    with open('./Ekamfile', "r") as f:
-        run(f.read(), tree)
+@click.argument("task")
+def ply(task):
+    click.echo(eval(task))
+
+main.add_command(ply)
 
 if __name__ == '__main__':
     main()
