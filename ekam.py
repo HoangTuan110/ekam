@@ -121,6 +121,14 @@ def eval(tokens):
             value, name = tokens[i + 1], tokens[i + 2]
             global_env[name["v"]] = value["v"]
             i += 3
+        # Alias
+        elif tokens[i]["v"] == "->":
+            pass
+        # Recipe
+        elif tokens[i]["v"] == ":":
+            name, args, cmds = tokens[i + 1], tokens[i + 2], tokens[i + 3]
+            global_env[name["v"]] = (args["v"], cmds["v"])
+            i += 4
         else:
             i += 1
 
