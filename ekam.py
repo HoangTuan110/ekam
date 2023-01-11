@@ -17,7 +17,7 @@ TYPES = [
 ]
 
 # Environments: Containing variables, aliases, and recipes
-env = {}
+global_env = {}
 
 # Helper functions
 def o    (t, v): return { "t": t, "v": v }
@@ -43,13 +43,16 @@ def consume(cond, code, pos):
         pos += 1
     return code[prev_pos:pos], pos
 
-def consume_string(code: str, pos: int):
+def consume_string(env: dict, code: str, pos: int):
     "Consume string literals"
     tmp = ""
     while pos < len(code) and code[pos] != "'":
         if code[pos] == "\\":
             tmp += rf"{code[pos + 1]}"
             pos += 2
+        elif code[pos] == "$":
+            ident, pos = identifier(code, pos)
+            tmp += env[ident]
         else:
             tmp += code[pos]
             pos += 1
@@ -66,7 +69,7 @@ def identifier(code, pos):
 
 def parseVal(code, pos):
     if code[pos] == "'":
-        val, pos = consume_string(code, pos + 1)
+        val, pos = consume_string(global_env, code, pos + 1)
         return os(val), pos + 1
     elif code[pos] == "$":
         ident, pos = identifier(code, pos + 1)

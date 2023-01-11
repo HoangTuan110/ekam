@@ -14,5 +14,8 @@
 # run a specific test (only for demonstration purposes)
 : $test [$name] [ $build './test --test $name' ]
 
+# String interpolation
+: $get-host [] [ 'echo $host' ]
+
 # a little dad joke at the end here
 : $joke [] [ 'echo "Where did all the lights go to when they commit a crime? Prism! (It\'s a light sentence)"' ]
