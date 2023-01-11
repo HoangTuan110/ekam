@@ -123,7 +123,7 @@ def eval(tokens):
             i += 3
         # Alias
         elif tokens[i]["v"] == "->":
-            pass
+            i += 1
         # Recipe
         elif tokens[i]["v"] == ":":
             name, args, cmds = tokens[i + 1], tokens[i + 2], tokens[i + 3]
