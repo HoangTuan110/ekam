@@ -10,8 +10,13 @@ def execute_task(task):
     # This is indexing hell
     cmds = global_env[task][1]
     for cmd in cmds:
-        click.echo(cmd["v"])
-        system(cmd["v"])
+        # If the command is actually not a command but another recipe
+        # then we will run that recipe instead
+        if cmd["t"] == 3:
+            execute_task(cmd["v"])
+        else:
+            click.echo(cmd["v"])
+            system(cmd["v"])
 
 @click.group()
 def main():
