@@ -8,5 +8,8 @@
 # build
 : $build [] [ 'nuitka3 main.py --follow-imports -o ekam' ]
 
+# test our example
+: $test [] [ $build './ekam ply joke --quiet false --tree true' ]
+
 # a little dad joke at the end here
 : $joke [] [ 'echo "Where did all the lights go to when they commit a crime? Prism! (It\'s a light sentence)"' ]
