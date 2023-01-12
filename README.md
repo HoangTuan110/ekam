@@ -22,11 +22,12 @@
 
   Influenced by [`just`](https://github.com/casey/just).
 
-  Commands, called recipes, are stored in `Ekamfile` with a syntax you have never seen before:
+  Commands, called recipes, are stored in `Ekamfile`:
 
   ```
-  # Just
+  # == Just ==
   alias b := build
+
   host := 'uname -a'
 
   # build main
@@ -40,7 +41,7 @@
   test TEST: build
     ./test --test {{TEST}}
 
-  # Ekam
+  # == Ekam ==
   -> $b $build
 
   <- 'uname -a' $host
@@ -70,6 +71,7 @@
 
 ## Features
 - Written in Python, so platform-agnostic, lightweight, and run fast enough to be tolerable by many
+- Ugly-looking syntax
 - Errors are as few and as obscure as possible, 'cause f-you, that's why
-- Recipes can take command-line arguments, just like `just`.
-- No language-agnostic features like `just`, so you can only write your recipes in this diabolical mess
+- Cryptic help messages
+- Recipes can take command-line arguments, _just like `just`_.
