@@ -19,8 +19,8 @@ def main():
 
 @click.command()
 @click.argument("task")
-@click.option("--tree", default=False, help="Print the parsed data as a tree")
-@click.option("--quiet", default=True, help="Don't print out the unnecessary debug data")
+@click.option("--tree", default=False)
+@click.option("--quiet", default=True)
 def ply(task, tree, quiet):
     with open("Ekamfile", "r") as f:
         run(f.read(), tree, quiet)
