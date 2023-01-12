@@ -52,16 +52,33 @@ def consume_string(env: dict, code: str, pos: int):
         if code[pos] == "\\":
             tmp += rf"{code[pos + 1]}"
             pos += 2
-        #elif code[pos] == "$":
-        #    ident, pos = identifier(code, pos)
-        #    tmp += env[ident]
+        elif code[pos] == "{":
+            if code[pos + 1] == "{":
+                ident, pos = consume_string_interpolation(code, pos + 1)
+                tmp += env[ident]
+            else:
+                tmp += code[pos]
+                pos += 1
         else:
             tmp += code[pos]
             pos += 1
     return tmp, pos
 
+def consume_string_interpolation(code, pos):
+    "Parse string interpolations"
+    prev_pos = pos
+    pos += 1
+    while pos < len(code):
+        # When it is the end of string interpolation, we skips those two }s
+        # and exit
+        if code[pos] == "}" and code[pos + 1] == "}":
+            pos += 2
+            break
+        pos += 1
+    return code[prev_pos:pos], pos
+
 def identifier(code, pos):
-    "Censume an identifier"
+    "Consume an identifier"
     prev_pos = pos
     pos += 1
     if code[pos].isalpha():
