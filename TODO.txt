@@ -1,0 +1,26 @@
+Todos:
+
+- [x] Check if the recipe is available
+- [x] Language
+  - [ ] Parsing
+    - [x] Variables
+    - [x] Lists
+    - [x] Aliases
+    - [x] Recipes
+    - [ ] Strings
+      - [x] Parse strings
+      - [x] Support string escaping (somewhat)
+      - [ ] Support string interpolation ({{like_this}})
+  - [ ] Evaluating
+    - [x] Running recipes
+    - [x] Run aliases
+    - [ ] Running recipes within recipes
+  - [x] Running
+- [x] CLI
+  - [x] `ply`
+  - [ ] `docket`
+- [ ] Support CLI arguments in tasks
+- [ ] Other stuff
+  - [x] Run on any platform with the default shell
+  - [ ] Supports `.env` files
+  - [ ] Auto-completion
