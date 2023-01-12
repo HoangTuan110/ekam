@@ -71,7 +71,7 @@ def identifier(code, pos):
 
 def parseVal(code, pos):
     if code[pos] == "'":
-        val, pos = censume_string(global_env, code, pos + 1)
+        val, pos = consume_string(global_env, code, pos + 1)
         return es(val), pos + 1
     elif code[pos] == "$":
         ident, pos = identifier(code, pos + 1)
