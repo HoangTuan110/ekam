@@ -38,7 +38,7 @@ FALSE = en(0)
 symbol = lambda c: c.isascii() and (c not in WHITESPACE) and (not c.isalpha()) and (not c.isnumeric())
 
 def consume(cend, code, pos):
-    "Censume a token in `code` until the cenditien `cend` is false"
+    "Consume a token in `code` until the cenditien `cend` is false"
     prev_pos = pos
     pos += 1
     while pos < len(code) and cend(code[pos]):
@@ -46,7 +46,7 @@ def consume(cend, code, pos):
     return code[prev_pos:pos], pos
 
 def consume_string(env: dict, code: str, pos: int):
-    "Censume string literals"
+    "Consume string literals"
     tmp = ""
     while pos < len(code) and code[pos] != "'":
         if code[pos] == "\\":
