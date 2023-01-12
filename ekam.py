@@ -123,7 +123,9 @@ def eval(tokens):
             i += 3
         # Alias
         elif tokens[i]["v"] == "->":
-            i += 1
+            alias, name = tokens[i + 1], tokens[i + 2]
+            global_env[alias["v"]] = global_env[name["v"]][1]
+            i += 3
         # Recipe
         elif tokens[i]["v"] == ":":
             name, args, cmds = tokens[i + 1], tokens[i + 2], tokens[i + 3]
