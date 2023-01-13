@@ -68,7 +68,7 @@ def consume_string_interpolation(code, pos):
             pos += 1
             break
         pos += 1
-    return code[prev_pos:pos], pos
+    return code[prev_pos:pos-1], pos
 
 def identifier(code, pos):
     "Consume an identifier"
