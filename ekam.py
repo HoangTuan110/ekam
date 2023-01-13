@@ -34,11 +34,11 @@ FALSE = en(0)
 
 symbol = lambda c: c.isascii() and (c not in WHITESPACE) and (not c.isalpha()) and (not c.isnumeric())
 
-def consume(cend, code, pos):
-    "Consume a token in `code` until the cenditien `cend` is false"
+def consume(cond, code, pos):
+    "Consume a token in `code` until the conditien `cond` is false"
     prev_pos = pos
     pos += 1
-    while pos < len(code) and cend(code[pos]):
+    while pos < len(code) and cond(code[pos]):
         pos += 1
     return code[prev_pos:pos], pos
 
