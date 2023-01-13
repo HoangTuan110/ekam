@@ -29,7 +29,7 @@ def main():
 def ply(task, tree, quiet):
     with open("Ekamfile", "r") as f:
         run(f.read(), tree, quiet)
-    env = eval(f.read())
+        env = eval(f.read())
     # If the name is in the environment and it is an actual task (aka a tuple)
     # then we can run it
     if task in env and isinstance(env[task], tuple):
