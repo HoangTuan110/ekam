@@ -124,49 +124,50 @@ def format(o):
     else:                            # Numbers/Strings/Other literals
         return o["v"]
 
-def eval(tokens):
+def eval_token(env: dict, token: dict):
+    """Evaluate the code from one token"""
+    # If the token is a verb, then we can parse the commands
+    # based on them
+    if token["t"] == 4:
+        # Set
+        if token["v"] == "<-":
+            value, name = eval(token[i + 1]), token[i + 2]
+            env[name["v"]] = value
+            # Alias
+        elif token["v"] == "->":
+            alias, name = token[i + 1], token[i + 2]
+            env[alias["v"]] = ea(name["v"])
+            # Recipe
+        elif token["v"] == ":":
+            name, args, cmds = token[i + 1], eval(token[i + 2]), eval(token[i + 3])
+            env[name["v"]] = (args, cmds)
+        # If it's just a variable, we will return its value in the env
+        elif token["t"] == 3:
+            return env[token["v"]]
+        # If it's a list, we will return a list with each value being eval'd
+        elif token["t"] == 2:
+            return [eval(e) for e in token["v"]]
+        # If it's is a string, we will parse the string by
+        # parsing each part of the string list one by one
+        elif token["t"] == 1:
+            res = ""
+            string_lst = token["v"]
+            for j in string_lst:
+                res += eval(string_lst[j])
+            return res
+        elif token["t"] == 0:
+            return token["v"]
+    else:
+        return env
+
+
+def eval(tokens: list[dict]):
     """Evaluate the code from tokens"""
     i = 0
     # Envirenments: Centaining variables, aliases, and recipes
     env = {}
     while i < len(tokens):
-        # If the token is a verb, then we can parse the commands
-        # based on them
-        if tokens[i]["t"] == 4:
-            # Set
-            if tokens[i]["v"] == "<-":
-                value, name = eval(tokens[i + 1]), tokens[i + 2]
-                env[name["v"]] = value
-                i += 3
-            # Alias
-            elif tokens[i]["v"] == "->":
-                alias, name = tokens[i + 1], tokens[i + 2]
-                env[alias["v"]] = ea(name["v"])
-                i += 3
-            # Recipe
-            elif tokens[i]["v"] == ":":
-                name, args, cmds = tokens[i + 1], eval(tokens[i + 2]), eval(tokens[i + 3])
-                env[name["v"]] = (args, cmds)
-                i += 4
-            else:
-                i += 1
-        # If it's just a variable, we will return its value in the env
-        elif tokens[i]["t"] == 3:
-            return env[tokens[i]["v"]]
-        # If it's a list, we will return a list with each value being eval'd
-        elif tokens[i]["t"] == 2:
-            return [eval(e) for e in tokens[i]["v"]]
-        # If it's is a string, we will parse the string by
-        # parsing each part of the string list one by one
-        elif tokens[i]["t"] == 1:
-            res = ""
-            string_lst = tokens[i]["v"]
-            for j in string_lst:
-                res += eval(string_lst[j])
-            return res
-        elif tokens[i]["t"] == 0:
-            return tokens[i]["v"]
-    return env
+        env, i = eval_token(env, tokens[i])
 
 def run(code, tree=False, quiet=True):
     """Run the code, and return tokens and the environment"""
