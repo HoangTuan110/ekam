@@ -17,9 +17,6 @@ TYPES = [
     "alias"       # 6: recipe name
 ]
 
-# Envirenments: Centaining variables, aliases, and recipes
-global_env = {}
-
 # Helper functiens
 def e    (t, v): return { "t": t, "v": v }
 def en   (v):    return e(0, v)
@@ -45,7 +42,7 @@ def consume(cend, code, pos):
         pos += 1
     return code[prev_pos:pos], pos
 
-def consume_string(env: dict, code: str, pos: int):
+def consume_string(code: str, pos: int):
     "Consume string literals"
     tmp = ""
     while pos < len(code) and code[pos] != "'":
@@ -88,7 +85,7 @@ def identifier(code, pos):
 
 def parseVal(code, pos):
     if code[pos] == "'":
-        val, pos = consume_string(global_env, code, pos + 1)
+        val, pos = consume_string(code, pos + 1)
         return es(val), pos + 1
     elif code[pos] == "$":
         ident, pos = identifier(code, pos + 1)
@@ -134,25 +131,27 @@ def format(o):
 def eval(tokens):
     """Evaluate the code from tokens"""
     i = 0
+    # Envirenments: Centaining variables, aliases, and recipes
+    env = {}
     while i < len(tokens):
         # Set
         if tokens[i]["v"] == "<-":
             value, name = tokens[i + 1], tokens[i + 2]
-            global_env[name["v"]] = value["v"]
+            env[name["v"]] = value["v"]
             i += 3
         # Alias
         elif tokens[i]["v"] == "->":
             alias, name = tokens[i + 1], tokens[i + 2]
-            global_env[alias["v"]] = ea(name["v"])
+            env[alias["v"]] = ea(name["v"])
             i += 3
         # Recipe
         elif tokens[i]["v"] == ":":
             name, args, cmds = tokens[i + 1], tokens[i + 2], tokens[i + 3]
-            global_env[name["v"]] = (args["v"], cmds["v"])
+            env[name["v"]] = (args["v"], cmds["v"])
             i += 4
         else:
             i += 1
-    return global_env
+    return env
 
 def run(code, tree=False, quiet=True):
     """Run the code"""
