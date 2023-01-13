@@ -154,7 +154,7 @@ def eval(tokens):
     return env
 
 def run(code, tree=False, quiet=True):
-    """Run the code"""
+    """Run the code, and return tokens and the environment"""
     parsed = parse(code)
     env = eval(parsed)
     if not quiet:
@@ -165,3 +165,4 @@ def run(code, tree=False, quiet=True):
             print(f"Parsed: {parsed}")
         print("Envirenments: ", end="")
         pprint(env)
+    return parsed, env

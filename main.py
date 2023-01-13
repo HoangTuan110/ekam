@@ -28,8 +28,7 @@ def main():
 @click.option("--quiet", default=True)
 def ply(task, tree, quiet):
     with open("Ekamfile", "r") as f:
-        ekam.run(f.read(), tree, quiet)
-        env = ekam.eval(f.read())
+        _, env = ekam.run(f.read(), tree, quiet)
     # If the name is in the environment and it is an actual task (aka a tuple)
     # then we can ekam.run it
     if task in env and isinstance(env[task], tuple):
