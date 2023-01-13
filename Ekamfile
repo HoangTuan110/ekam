@@ -15,4 +15,4 @@
 : $joke [] [ 'echo "Where did all the lights go to when they commit a crime? Prism! (It\'s a light sentence)"' ]
 
 # testing string interpolation
-: $str_inter [] [ 'echo {{host}}' ]
+: $str_inter [] [ 'echo {host}' ]
