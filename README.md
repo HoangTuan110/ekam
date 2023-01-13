@@ -22,28 +22,13 @@
 
   Influenced by [`just`](https://github.com/casey/just).
 
-  Commands, called recipes, are stored in `Ekamfile`:
+  Commands, called recipes, are stored in `Ekamfile` with a diabolical syntax resembled that of Forth:
 
   ```
-  # == Just ==
-  alias b := build
-
-  host := 'uname -a'
-
-  # build main
-  build:
-    cc *.c -o main
-
-  # test everything
-  test-all: build
-    ./test --all
-
-  test TEST: build
-    ./test --test {{TEST}}
-
-  # == Ekam ==
+  # `->` is alias
   -> $b $build
 
+  # `<-` is set
   <- 'uname -a' $host
 
   # build main
@@ -56,14 +41,9 @@
   : $test [$name] [ $build './test --test $name' ]
   ```
 
+  You can then execute and list all of them with:
+
   ```
-  # Running recipes and listing all of them
-
-  # Just
-  just <recipe>
-  just -l
-
-  # Ekam
   ekam ply <recipe>
   ekam docket
   ```
@@ -71,7 +51,20 @@
 
 ## Features
 - Written in Python, so platform-agnostic, lightweight, and run fast enough to be tolerable by many
-- Ugly-looking syntax
+- Equally obscure help messages
 - Errors are as few and as obscure as possible, 'cause f-you, that's why
-- Cryptic help messages
 - Recipes can take command-line arguments, _just like `just`_.
+
+## Installation
+
+### The sane way
+
+### The classical `git clone` way
+
+```sh
+git clone https://github.com/HoangTuan110/ekam
+cd ekam
+pip install -r requirements.txt
+python main.py ply b
+./ekam
+```
