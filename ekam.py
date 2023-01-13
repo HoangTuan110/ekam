@@ -44,22 +44,18 @@ def consume(cond, code, pos):
 
 def consume_string(code: str, pos: int):
     "Consume string literals"
-    tmp = ""
+    lst = []
     while pos < len(code) and code[pos] != "'":
         if code[pos] == "\\":
-            tmp += rf"{code[pos + 1]}"
+            lst.append(es(rf"{code[pos + 1]}"))
             pos += 2
         elif code[pos] == "{":
-            if code[pos + 1] == "{":
-                ident, pos = consume_string_interpolation(code, pos + 1)
-                tmp += env[ident]
-            else:
-                tmp += code[pos]
-                pos += 1
+            ident, pos = consume_string_interpolation(code, pos + 1)
+            lst.append(ei(ident))
         else:
-            tmp += code[pos]
+            lst.append(es(code[pos]))
             pos += 1
-    return tmp, pos
+    return lst, pos
 
 def consume_string_interpolation(code, pos):
     "Parse string interpolations"
@@ -68,8 +64,8 @@ def consume_string_interpolation(code, pos):
     while pos < len(code):
         # When it is the end of string interpolation, we skips those two }s
         # and exit
-        if code[pos] == "}" and code[pos + 1] == "}":
-            pos += 2
+        if code[pos] == "}":
+            pos += 1
             break
         pos += 1
     return code[prev_pos:pos], pos
@@ -134,23 +130,36 @@ def eval(tokens):
     # Envirenments: Centaining variables, aliases, and recipes
     env = {}
     while i < len(tokens):
-        # Set
-        if tokens[i]["v"] == "<-":
-            value, name = tokens[i + 1], tokens[i + 2]
-            env[name["v"]] = value["v"]
-            i += 3
-        # Alias
-        elif tokens[i]["v"] == "->":
-            alias, name = tokens[i + 1], tokens[i + 2]
-            env[alias["v"]] = ea(name["v"])
-            i += 3
-        # Recipe
-        elif tokens[i]["v"] == ":":
-            name, args, cmds = tokens[i + 1], tokens[i + 2], tokens[i + 3]
-            env[name["v"]] = (args["v"], cmds["v"])
-            i += 4
-        else:
-            i += 1
+        # If the token is a verb, then we can parse the commands
+        # based on them
+        if tokens[i]["t"] == 4:
+            # Set
+            if tokens[i]["v"] == "<-":
+                value, name = tokens[i + 1], tokens[i + 2]
+                env[name["v"]] = value["v"]
+                i += 3
+            # Alias
+            elif tokens[i]["v"] == "->":
+                alias, name = tokens[i + 1], tokens[i + 2]
+                env[alias["v"]] = ea(name["v"])
+                i += 3
+            # Recipe
+            elif tokens[i]["v"] == ":":
+                name, args, cmds = tokens[i + 1], tokens[i + 2], tokens[i + 3]
+                env[name["v"]] = (args["v"], cmds["v"])
+                i += 4
+            else:
+                i += 1
+        # If the token is a string instead, we will parse the string
+        # by parsing each part of the string list one by one
+        elif tokens[i]["t"] == 1:
+            res = ""
+            string_lst = tokens[i]["v"]
+            for j in string_lst:
+                if string_lst[j]["t"] == 3:
+                    res += env[string_lst[j]["v"]]
+                else:
+                    res += string_lst[j]["v"]
     return env
 
 def run(code, tree=False, quiet=True):
