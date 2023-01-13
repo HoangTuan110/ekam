@@ -1,4 +1,4 @@
-from ..ekam import parse, parseVal, eval
+from ..ekam import eval
 
 def test_eval():
     env = eval("""
