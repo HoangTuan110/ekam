@@ -2,16 +2,16 @@
 Ekam's CLI
 """
 
-import click
 from os import system
-from ekam import run
+import click
+import ekam
 
 def execute_task(env, task):
     # This is indexing hell
     cmds = env[task][1]
     for cmd in cmds:
         # If the command is actually not a command but another recipe
-        # then we will run that recipe instead
+        # then we will ekam.run that recipe instead
         if cmd["t"] == 3:
             execute_task(env, cmd["v"])
         else:
@@ -28,10 +28,10 @@ def main():
 @click.option("--quiet", default=True)
 def ply(task, tree, quiet):
     with open("Ekamfile", "r") as f:
-        run(f.read(), tree, quiet)
-        env = eval(f.read())
+        ekam.run(f.read(), tree, quiet)
+        env = ekam.eval(f.read())
     # If the name is in the environment and it is an actual task (aka a tuple)
-    # then we can run it
+    # then we can ekam.run it
     if task in env and isinstance(env[task], tuple):
         execute_task(env, task)
     # If the task is an alias, then we simply execute the task name that
