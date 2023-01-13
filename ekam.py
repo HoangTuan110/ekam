@@ -135,8 +135,8 @@ def eval(tokens):
         if tokens[i]["t"] == 4:
             # Set
             if tokens[i]["v"] == "<-":
-                value, name = tokens[i + 1], tokens[i + 2]
-                env[name["v"]] = value["v"]
+                value, name = eval(tokens[i + 1]), tokens[i + 2]
+                env[name["v"]] = value
                 i += 3
             # Alias
             elif tokens[i]["v"] == "->":
@@ -145,21 +145,27 @@ def eval(tokens):
                 i += 3
             # Recipe
             elif tokens[i]["v"] == ":":
-                name, args, cmds = tokens[i + 1], tokens[i + 2], tokens[i + 3]
-                env[name["v"]] = (args["v"], cmds["v"])
+                name, args, cmds = tokens[i + 1], eval(tokens[i + 2]), eval(tokens[i + 3])
+                env[name["v"]] = (args, cmds)
                 i += 4
             else:
                 i += 1
-        # If the token is a string instead, we will parse the string
-        # by parsing each part of the string list one by one
+        # If it's just a variable, we will return its value in the env
+        elif tokens[i]["t"] == 3:
+            return env[tokens[i]["v"]]
+        # If it's a list, we will return a list with each value being eval'd
+        elif tokens[i]["t"] == 2:
+            return [eval(e) for e in tokens[i]["v"]]
+        # If it's is a string, we will parse the string by
+        # parsing each part of the string list one by one
         elif tokens[i]["t"] == 1:
             res = ""
             string_lst = tokens[i]["v"]
             for j in string_lst:
-                if string_lst[j]["t"] == 3:
-                    res += env[string_lst[j]["v"]]
-                else:
-                    res += string_lst[j]["v"]
+                res += eval(string_lst[j])
+            return res
+        elif tokens[i]["t"] == 0:
+            return tokens[i]["v"]
     return env
 
 def run(code, tree=False, quiet=True):
