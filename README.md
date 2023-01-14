@@ -54,6 +54,10 @@
 - Errors are as few and as obscure as possible, 'cause f-you, that's why
 - Equally obscure help messages
 - Recipes can take command-line arguments though.
+- Brutalist by design: No control flow, no functions (although recipes is kind of a function).
+  Although you still have the necessary features (variables, recipes, aliases, executing recipes within recipes, etc.)
+- You can't change your shell, `ekam` used whatever the shell you are using
+- No multiline commands. All of the shell commands must be contained in a single string
 
 ## Installation
 
@@ -65,6 +69,14 @@
 git clone https://github.com/HoangTuan110/ekam
 cd ekam
 pip install -r requirements.txt
-python main.py ply b
-./ekam
 ```
+
+To run Ekam without compiling: `python main.py`
+
+Compile Ekam and run it: `python main.py ply b; ./ekam`
+
+## Author and License
+
+Ekam is written by Dang Hoang Tuan. An open source joke software from Vietnam.
+
+This thing is under the boring ass MIT license.
