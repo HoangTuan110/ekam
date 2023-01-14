@@ -7,16 +7,11 @@ import click
 import ekam
 
 def execute_recipe(env, recipe):
-    # This is indexing hell
+    """Execute a recipe"""
     cmds = env[recipe][1]
     for cmd in cmds:
-        # If the command is actually not a command but another recipe
-        # then we will ekam.run that recipe instead
-        if cmd["t"] == 3:
-            execute_recipe(env, cmd["v"])
-        else:
-            click.echo(cmd["v"])
-            system(cmd["v"])
+        click.echo(cmd)
+        system(cmd)
 
 @click.group()
 def main():
