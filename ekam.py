@@ -130,21 +130,21 @@ def eval(tokens: list[dict]):
     # Envirenments: Centaining variables, aliases, and recipes
     env = {}
     while i < len(tokens):
-        print(tokens[i])
+        print(tokens)
         # If the token is a verb, then we can parse the commands
         # based on them
         if tokens[i]["t"] == 4:
             # Set
             if tokens[i]["v"] == "<-":
-                value, name = eval(tokens[i][i + 1]), tokens[i][i + 2]
+                value, name = eval(tokens[i + 1]), tokens[i + 2]
                 env[name["v"]] = value
             # Alias
             elif tokens[i]["v"] == "->":
-                alias, name = tokens[i][i + 1], tokens[i][i + 2]
+                alias, name = tokens[i + 1], tokens[i + 2]
                 env[alias["v"]] = ea(name["v"])
             # Recipe
             elif tokens[i]["v"] == ":":
-                name, args, cmds = tokens[i][i + 1], eval(tokens[i][i + 2]), eval(tokens[i][i + 3])
+                name, args, cmds = tokens[i + 1], eval(tokens[i + 2]), eval(tokens[i + 3])
                 env[name["v"]] = (args, cmds)
         # If it's just a variable, we will return its value in the env
         elif tokens[i]["t"] == 3:
