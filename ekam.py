@@ -139,7 +139,7 @@ def eval_token(env, token):
         res = ""
         string_lst = token["v"]
         for part in string_lst:
-            print(part)
+            #print(part)
             res += eval_token(env, part)
         return res
     else:
@@ -173,7 +173,7 @@ def eval(tokens):
             return eval_token(env, tokens[i])
     return env
 
-def run(code, tree=False, quiet=True):
+def run(code, tree=False, quiet=False):
     """Run the code, and return tokens and the environment"""
     parsed = parse(code)
     env = eval(parsed)
