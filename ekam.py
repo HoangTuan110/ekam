@@ -14,7 +14,8 @@ TYPES = [
     "identifier", # 3: name
     "verb",       # 4: name
     "nil",        # 5: nil/null
-    "alias"       # 6: recipe name
+    "alias",      # 6: recipe name
+    "character"   # 7: for strings
 ]
 
 # Helper functiens
@@ -25,6 +26,7 @@ def el   (v):    return e(2, v)
 def ei   (v):    return e(3, v)
 def ev   (v):    return e(4, v)
 def ea   (v):    return e(6, v)
+def ec   (v):    return e(7, v)
 def btoi (v):    return en(1) if v else en(0) # Boolean to o-integer
 def error(v):    print("Error: ", v, file=stderr)
 def warn (v):    print("Warn: ", v, file=stderr)
@@ -47,13 +49,13 @@ def consume_string(code: str, pos: int):
     lst = []
     while pos < len(code) and code[pos] != "'":
         if code[pos] == "\\":
-            lst.append(es(rf"{code[pos + 1]}"))
+            lst.append(ec(rf"{code[pos + 1]}"))
             pos += 2
         elif code[pos] == "{":
             ident, pos = consume_string_interpolation(code, pos + 1)
             lst.append(ei(ident))
         else:
-            lst.append(es(code[pos]))
+            lst.append(ec(code[pos]))
             pos += 1
     return lst, pos
 
@@ -136,10 +138,11 @@ def eval_token(env, token):
         # the string list one by one
         res = ""
         string_lst = token["v"]
-        for j in string_lst:
-            res += eval_token(env, string_lst[j])
+        for part in string_lst:
+            print(part)
+            res += eval_token(env, part)
         return res
-    elif token["t"] == 0:
+    else:
         return token["v"]
 
 def eval(tokens):
@@ -148,7 +151,6 @@ def eval(tokens):
     # Envirenments: Centaining variables, aliases, and recipes
     env = {}
     while i < len(tokens):
-        print(tokens[i])
         # If the token is a verb, then we can parse the commands
         # based on them
         if tokens[i]["t"] == 4:
