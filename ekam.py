@@ -132,7 +132,7 @@ def eval_token(env, token):
     if token["t"] == 3: # Variable
         return env[token["v"]]
     elif token["t"] == 2: # List
-        return [eval(e) for e in token["v"]]
+        return [eval_token(env, e) for e in token["v"]]
     elif token["t"] == 1: # String
         # We will parse the string by parsing each part of
         # the string list one by one
