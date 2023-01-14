@@ -157,7 +157,7 @@ def eval(tokens):
         if tokens[i]["t"] == 4:
             # Set
             if tokens[i]["v"] == "<-":
-                value, name = eval(tokens[i + 1]), tokens[i + 2]
+                value, name = eval_token(env, tokens[i + 1]), tokens[i + 2]
                 env[name["v"]] = value
                 i += 3
             # Alias
@@ -167,7 +167,7 @@ def eval(tokens):
                 i += 3
             # Recipe
             elif tokens[i]["v"] == ":":
-                name, args, cmds = tokens[i + 1], eval(tokens[i + 2]), eval(tokens[i + 3])
+                name, args, cmds = tokens[i + 1], eval_token(env, tokens[i + 2]), eval_token(env, tokens[i + 3])
                 env[name["v"]] = (args, cmds)
                 i += 4
         else:
