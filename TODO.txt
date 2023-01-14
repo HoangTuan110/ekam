@@ -2,19 +2,19 @@ Todos:
 
 - [x] Check if the recipe is available
 - [x] Language
-  - [ ] Parsing
+  - [x] Parsing
     - [x] Variables
     - [x] Lists
     - [x] Aliases
     - [x] Recipes
-    - [ ] Strings
+    - [x] Strings
       - [x] Parse strings
       - [x] Support string escaping (somewhat)
-      - [ ] Support string interpolation ({{like_this}})
-  - [ ] Evaluating
+      - [x] Support string interpolation ({like_this})
+  - [x] Evaluating
     - [x] Running recipes
     - [x] Run aliases
-    - [ ] Running recipes within recipes
+    - [x] Running recipes within recipes
   - [x] Running
 - [x] CLI
   - [x] `ply`
