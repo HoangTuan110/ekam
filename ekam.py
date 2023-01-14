@@ -124,13 +124,31 @@ def format(o):
     else:                            # Numbers/Strings/Other literals
         return o["v"]
 
-def eval(tokens: list[dict]):
+def eval_token(env, token):
+    """Evaluate a single token"""
+    # Here we exclude out verbs because those will be handled by the main eval() function
+    if token["t"] == 3: # Variable
+        return env[token["v"]]
+    elif token["t"] == 2: # List
+        return [eval(e) for e in token["v"]]
+    elif token["t"] == 1: # String
+        # We will parse the string by parsing each part of
+        # the string list one by one
+        res = ""
+        string_lst = token["v"]
+        for j in string_lst:
+            res += eval(string_lst[j])
+            return res
+    elif token["t"] == 0:
+        return token["v"]
+
+def eval(tokens):
     """Evaluate the code from tokens"""
     i = 0
     # Envirenments: Centaining variables, aliases, and recipes
     env = {}
     while i < len(tokens):
-        if isinstance(tokens[i], list):
+        if isinstance(tokens, list):
             print(tokens[i])
         else:
             print(tokens)
@@ -152,22 +170,8 @@ def eval(tokens: list[dict]):
                 name, args, cmds = tokens[i + 1], eval(tokens[i + 2]), eval(tokens[i + 3])
                 env[name["v"]] = (args, cmds)
                 i += 4
-        # If it's just a variable, we will return its value in the env
-        elif tokens[i]["t"] == 3:
-            return env[tokens[i]["v"]]
-        # If it's a list, we will return a list with each value being eval'd
-        elif tokens[i]["t"] == 2:
-            return [eval(e) for e in tokens[i]["v"]]
-        # If it's is a string, we will parse the string by
-        # parsing each part of the string list one by one
-        elif tokens[i]["t"] == 1:
-            res = ""
-            string_lst = tokens[i]["v"]
-            for j in string_lst:
-                res += eval(string_lst[j])
-            return res
-        elif tokens[i]["t"] == 0:
-            return tokens[i]["v"]
+        else:
+            return eval_token(env, tokens[i])
     return env
 
 def run(code, tree=False, quiet=True):
