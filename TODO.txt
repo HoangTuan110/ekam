@@ -18,7 +18,7 @@ Todos:
   - [x] Running
 - [x] CLI
   - [x] `ply`
-  - [ ] `docket`
+  - [x] `docket`
 - [ ] Support CLI arguments in tasks
 - [ ] Other stuff
   - [x] Run on any platform with the default shell
