@@ -130,7 +130,10 @@ def eval(tokens: list[dict]):
     # Envirenments: Centaining variables, aliases, and recipes
     env = {}
     while i < len(tokens):
-        print(tokens[i])
+        if isinstance(tokens[i], list):
+            print(tokens[i])
+        else:
+            print(tokens)
         # If the token is a verb, then we can parse the commands
         # based on them
         if tokens[i]["t"] == 4:
