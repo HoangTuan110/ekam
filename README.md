@@ -38,7 +38,7 @@
   : $test-all [] [ $build './test --all' ]
 
   # run a specific test
-  : $test [$name] [ $build './test --test $name' ]
+  : $test [$name] [ $build './test --test {name}' ]
   ```
 
   You can then execute and list all of them with:
@@ -50,10 +50,10 @@
 </p>
 
 ## Features
-- Written in Python, so platform-agnostic, lightweight, and run fast enough to be tolerable by many
-- Equally obscure help messages
+- Written in Python, so platform-agnostic, lightweight, and runs incredibly slow
 - Errors are as few and as obscure as possible, 'cause f-you, that's why
-- Recipes can take command-line arguments, _just like `just`_.
+- Equally obscure help messages
+- Recipes can take command-line arguments though.
 
 ## Installation
 
