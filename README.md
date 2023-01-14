@@ -18,11 +18,12 @@
 </div>
 
 <p class="desc">
-  Ekam is the command runner for those who hates themselves.
+  Ekam is the command runner for those who feel that thier utilitarian tools should be a bit more challenging to use.
+  It tries to balance between usability and inconviniences.
 
-  Influenced by [`just`](https://github.com/casey/just).
+  Ekam takes major influence from [`just`](https://github.com/casey/just).
 
-  Commands, called recipes, are stored in `Ekamfile` with a diabolical syntax resembled that of Forth:
+  Commands, called recipes, are stored in `Ekamfile` with a command-first, argument-second structure:
 
   ```
   # `->` is alias
@@ -49,21 +50,22 @@
   ```
 </p>
 
-## Features
-- Written in Python, so platform-agnostic, lightweight, and runs incredibly slow
-- Errors are as few and as obscure as possible, 'cause f-you, that's why
-- Equally obscure help messages
+## Features (and inconviniences)
+- Written in Python, so platform-agnostic, lightweight, and runs fast enough to be tolerable by many
+- Errors are as few and as obscure as possible, 'cause they are for the plebs
+- Equally obscure help messages. Who needs those?
 - Recipes can take command-line arguments though.
-- Brutalist by design: No control flow, no functions (although recipes is kind of a function).
+- Brutalist by design: No control flow, no functions (although recipes are kinda like functions).
   Although you still have the necessary features (variables, recipes, aliases, executing recipes within recipes, etc.)
-- You can't change your shell, `ekam` used whatever the shell you are using
+- You can't change your shell, `ekam` use whatever the shell you are using
 - No multiline commands. All of the shell commands must be contained in a single string
+- `.env` files? What's that?
 
 ## Installation
 
 ### The sane way
 
-### The classical `git clone` way
+### The `git clone` way
 
 ```sh
 git clone https://github.com/HoangTuan110/ekam
@@ -73,7 +75,7 @@ pip install -r requirements.txt
 
 To run Ekam without compiling: `python main.py`
 
-Compile Ekam and run it: `python main.py ply b; ./ekam`
+To compile Ekam and run it (warning: can be quite long): `python main.py ply b; ./ekam`
 
 ## Author and License
 
