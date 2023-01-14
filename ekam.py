@@ -138,11 +138,11 @@ def eval(tokens: list[dict]):
             if tokens[i]["v"] == "<-":
                 value, name = eval(tokens[i][i + 1]), tokens[i][i + 2]
                 env[name["v"]] = value
-                # Alias
+            # Alias
             elif tokens[i]["v"] == "->":
                 alias, name = tokens[i][i + 1], tokens[i][i + 2]
                 env[alias["v"]] = ea(name["v"])
-                # Recipe
+            # Recipe
             elif tokens[i]["v"] == ":":
                 name, args, cmds = tokens[i][i + 1], eval(tokens[i][i + 2]), eval(tokens[i][i + 3])
                 env[name["v"]] = (args, cmds)
