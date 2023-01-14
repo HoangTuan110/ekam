@@ -10,9 +10,11 @@ def execute_recipe(env, recipe):
     """Execute a recipe"""
     cmds = env[recipe][1]
     for cmd in cmds:
+        # Handling executing recipes within recipes
         if isinstance(cmd, tuple):
-            click.echo(cmd[1])
-            system(cmd[1])
+            for scmd in cmd[1]:
+                click.echo(scmd)
+                system(scmd)
         else:
             click.echo(cmd)
             system(cmd)
