@@ -41,7 +41,17 @@ def ply(recipe, tree, quiet):
     else:
         click.secho(f"No recipe named {recipe}", fg="red")
 
+@click.command()
+def docket():
+    with open("Ekamfile", "r") as f:
+        _, env = ekam.run(f.read(), quiet=True)
+    # Filter out the env to get a list of recipes and aliases
+    recipes = list(filter(lambda x: not isinstance(x, tuple), env))
+    for recipe in recipes:
+        print(f"\t{recipe}")
+
 main.add_command(ply)
+main.add_command(docket)
 
 if __name__ == '__main__':
     main()
