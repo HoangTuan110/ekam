@@ -138,7 +138,7 @@ def eval_token(env, token):
         string_lst = token["v"]
         for j in string_lst:
             res += eval(string_lst[j])
-            return res
+        return res
     elif token["t"] == 0:
         return token["v"]
 
