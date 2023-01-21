@@ -33,6 +33,7 @@ def ply(recipe, tree, quiet):
     # If the name is in the environment and it is an actual recipe (aka a tuple)
     # then we can ekam.run it
     if recipe in env and isinstance(env[recipe], tuple):
+        print(env[recipe])
         execute_recipe(env, recipe)
     # If the recipe is an alias, then we simply execute the recipe name that
     # alias is associated with
