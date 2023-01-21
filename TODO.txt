@@ -20,7 +20,5 @@ Todos:
   - [x] `ply`
   - [x] `docket`
 - [ ] Support CLI arguments in tasks
-- [ ] Other stuff
+- [x] Other stuff
   - [x] Run on any platform with the default shell
-  - [ ] Supports `.env` files
-  - [ ] Auto-completion
