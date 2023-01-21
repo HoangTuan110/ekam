@@ -18,4 +18,4 @@
 : $str_inter [] [ 'echo {host}; {host}' ]
 
 # testing cli arguments handling
-: $cli-args [$name] [ 'echo My name is {name}' ]
+: $cli_args [$name] [ 'echo My name is {name}' ]
