@@ -16,6 +16,3 @@
 
 # testing string interpolation
 : $str_inter [] [ 'echo {host}; {host}' ]
-
-# testing cli arguments handling
-: $cli_args [$name] [ 'echo My name is {name}' ]

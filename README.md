@@ -51,8 +51,8 @@
 - Written in Python, so platform-agnostic, lightweight, and runs fast enough to be tolerable by many
 - Errors are as few and as obscure as possible, 'cause they are for the plebs
 - Equally obscure help messages. Who needs those?
-- No CLI arguments handling for recipes. Doing that will add more complexity to the spagetti code I ported from another
-  of my abandoned project
+- No CLI arguments handling for recipes. Doing that will add more complexity to the spagetti code that I ported from
+  another of my abandoned project
 - Brutalist by design: No control flow, no functions (although recipes are kinda like functions).
   Although you still have the necessary features (variables, recipes, aliases, executing recipes within recipes, etc.)
 - You can't change your shell, `ekam` use whatever the shell you are using
