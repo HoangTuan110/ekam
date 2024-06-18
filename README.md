@@ -77,6 +77,6 @@ To compile Ekam and run it (warning: can be quite long): `python main.py ply b; 
 
 ## Author and License
 
-Ekam is written by Dang Hoang Tuan. An open source joke software from Vietnam.
+Ekam is written by Tsuki.
 
 This thing is under the boring ass MIT license.
